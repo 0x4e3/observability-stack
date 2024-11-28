@@ -14,4 +14,4 @@ alerting:
 
 scrape_config_files:
   - ./stack/*.yml
-  - ./targets/*.yml
+  - ./custom/*.yml

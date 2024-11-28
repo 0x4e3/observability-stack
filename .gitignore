@@ -1,2 +1,2 @@
-prometheus/targets/*.yml
+prometheus/custom/*.yml
 grafana/dashboards/custom/*.json
