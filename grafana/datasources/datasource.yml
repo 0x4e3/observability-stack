@@ -8,6 +8,7 @@ datasources:
     isDefault: true
     access: proxy
     editable: false
+
   - name: Loki
     type: loki
     access: proxy 
@@ -17,6 +18,13 @@ datasources:
     isDefault: false
     version: 1
     editable: false
+    jsonData:
+      derivedFields:
+        - datasourceUid: Tempo
+          matcherRegex: trace_id
+          name: TraceID
+          url: $${__value.raw}
+
   - name: Tempo
     type: tempo
     access: proxy
@@ -29,7 +37,18 @@ datasources:
     apiVersion: 1
     uid: tempo
     jsonData:
-      httpMethod: GET
+      nodeGraph:
+        enabled: true
       serviceMap:
-        datasourceUid: prometheus
-
+        datasourceUid: Prometheus
+      search:
+        hide: false
+      lokiSearch:
+        datasourceUid: Loki
+      tracesToLogs:
+        datasourceUid: Loki
+        filterBySpanID: false
+        filterByTraceID: true
+        mapTagNamesEnabled: false
+        tags:
+          - compose_service
