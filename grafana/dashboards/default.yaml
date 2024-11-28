@@ -2,7 +2,12 @@
 apiVersion: 1
 
 providers:
-  - name: Default
+  - name: Stack
     type: file
     options:
-      path: /etc/grafana/provisioning/dashboards/source 
+      path: /etc/grafana/provisioning/dashboards/stack
+  - name: Custom
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards/custom
+      foldersFromFilesStructure: true

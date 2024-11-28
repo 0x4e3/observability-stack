@@ -73,4 +73,9 @@ scrape_configs:
 ```
 
 You can add one file per application or use one file for all your application.  
-Prometheus will reload targets automatically (with `--web.enable-lifecycle` option). 
+Prometheus will reload targets automatically (with `--web.enable-lifecycle` option).
+
+## Grafana's dashboards provisioning
+
+To add your own dashboard to grafana, you should create `.json` file inside `grafana/dashboards/custom` directory. 
+All dashboards inside this directory will be provisioned automatically. 
