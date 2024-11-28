@@ -3,13 +3,14 @@ name: "observability-stack"
 
 services:
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.55.1
     container_name: prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --enable-feature=exemplar-storage
       - --enable-feature=native-histograms
       - --web.enable-remote-write-receiver
+      - --web.enable-lifecycle
     ports:
       - 9090:9090
     restart: unless-stopped
@@ -28,7 +29,7 @@ services:
     image: prom/alertmanager
     container_name: alertmanager
     restart: unless-stopped
-    volumes: 
+    volumes:
       - ./alertmanager/:/etc/alertmanager/
     command:
       - '--config.file=/etc/alertmanager/config.yml'
@@ -42,7 +43,7 @@ services:
     restart: unless-stopped
     ports:
       - 3100:3100
-    command: 
+    command:
       - --config.file=/etc/loki/loki-config.yaml
     volumes:
       - ./loki:/etc/loki
