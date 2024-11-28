@@ -72,7 +72,12 @@ scrape_configs:
 ```
 
 You can add one file per application or use one file for all your application.  
-Prometheus will reload targets automatically (with `--web.enable-lifecycle` option).
+
+Restart prometheus container to apply changes
+
+```shell
+docker compose restart prometheus
+```
 
 ## Grafana's dashboards provisioning
 
