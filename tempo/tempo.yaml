@@ -37,6 +37,27 @@ compactor:
     block_retention: 1h                # overall Tempo trace retention. set for demo purposes
 
 metrics_generator:
+  processor:
+    # Span metrics create metrics based on span type, duration, name and service.
+    span_metrics:
+      # Configure extra dimensions to add as metric labels.
+      dimensions:
+        - http.method
+        - http.target
+        - http.status_code
+        - service.version
+    # Service graph metrics create node and edge metrics for determing service interactions.
+    service_graphs:
+      # Configure extra dimensions to add as metric labels.
+      dimensions:
+        - http.method
+        - http.target
+        - http.status_code
+        - service.version
+    # Configure the local blocks processor.
+    local_blocks:
+      # Ensure that metrics blocks are flushed to storage so TraceQL metrics queries against historical data.
+      flush_to_storage: true
   registry:
     external_labels:
       source: tempo
@@ -62,4 +83,3 @@ overrides:
     metrics_generator:
       processors: [service-graphs, span-metrics, local-blocks] # enables metrics generator
       generate_native_histograms: both
-
