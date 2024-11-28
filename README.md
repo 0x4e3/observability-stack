@@ -49,4 +49,28 @@ Configuration: `./tempo/tempo.yaml`
 
 Address: http://127.0.0.1:3000  
 Datasources provisioning configuration: `./grafana/datasources/datasource.yml`  
-To automaticaly add dashboards place json-file to `./grafana/dashboards/source/`   
+To automaticaly add dashboards place json-file to `./grafana/dashboards/source/`
+
+## Prometheus targets
+
+Prometheus scraps metrics from all grafana stack services from compose file.  
+
+To add your local application as a prometheus target, you need to create `.yml` file inside `prometheus/targets` directory.  
+
+For example:  
+
+```yaml
+---
+scrape_configs:
+  - job_name: my-application
+    honor_timestamps: true
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets: [ host.docker.internal:8000 ]
+```
+
+You can add one file per application or use one file for all your application.  
+Prometheus will reload targets automatically (with `--web.enable-lifecycle` option). 
